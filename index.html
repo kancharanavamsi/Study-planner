@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Planner</title>
+    <title>Government Exam Study Planner</title>
     <style>
         :root {
             /* Design System Colors */
@@ -1584,14 +1585,14 @@
         // Load schedules
         function loadSchedules() {
             const key = `studySchedules_${currentProfile}`;
-            const saved = sessionStorage.getItem(key);
+            const saved = localStorage.getItem(key);
             schedules = saved ? JSON.parse(saved) : [];
         }
 
         // Save schedules
         function saveSchedules() {
             const key = `studySchedules_${currentProfile}`;
-            sessionStorage.setItem(key, JSON.stringify(schedules));
+            localStorage.setItem(key, JSON.stringify(schedules));
         }
 
         // Update statistics
@@ -1870,14 +1871,14 @@
         }
 
         function loadChatMessages() {
-            const saved = sessionStorage.getItem('chatMessages_global');
+            const saved = localStorage.getItem('chatMessages_global');
             chatMessages = saved ? JSON.parse(saved) : [];
             displayChatMessages();
             updateUnreadCount();
         }
 
         function saveChatMessages() {
-            sessionStorage.setItem('chatMessages_global', JSON.stringify(chatMessages));
+            localStorage.setItem('chatMessages_global', JSON.stringify(chatMessages));
         }
 
         function displayChatMessages() {
@@ -1999,7 +2000,7 @@
             const otherProfileMessages = chatMessages.filter(msg => msg.profile !== currentProfileName);
             
             // Get last seen timestamp
-            const lastSeen = sessionStorage.getItem(`lastSeen_${currentProfile}`) || 0;
+            const lastSeen = localStorage.getItem(`lastSeen_${currentProfile}`) || 0;
             unreadCount = otherProfileMessages.filter(msg => new Date(msg.timestamp).getTime() > lastSeen).length;
             
             updateChatBadge();
@@ -2016,7 +2017,7 @@
             
             // Update last seen when chat is opened
             if (document.getElementById('chatContainer').classList.contains('active')) {
-                sessionStorage.setItem(`lastSeen_${currentProfile}`, new Date().getTime());
+                localStorage.setItem(`lastSeen_${currentProfile}`, new Date().getTime());
             }
         }
 
@@ -2042,4 +2043,3 @@
     </script>
 </body>
 </html>
-
