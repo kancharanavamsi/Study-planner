@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Exam Study Planner</title>
+    <style>
+        :root {
+            /* Design System Colors */
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            --color-orange-500: rgba(168, 75, 47, 1);
+
+            /* RGB versions for opacity control */
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-slate-500-rgb: 98, 108, 113;
+            --color-red-500-rgb: 192, 21, 47;
+            --color-red-400-rgb: 255, 84, 89;
+            --color-orange-500-rgb: 168, 75, 47;
+            --color-orange-400-rgb: 230, 129, 97;
+
+            /* Semantic Color Tokens */
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-btn-primary-text: var(--color-cream-50);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-error: var(--color-red-500);
+            --color-success: var(--color-teal-500);
+            --color-warning: var(--color-orange-500);
+            --color-info: var(--color-slate-500);
+            --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+
+            /* Typography */
+            --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-md: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+
+            /* Spacing */
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-md: 10px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+
+            /* Animation */
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-error: var(--color-red-400);
+                --color-success: var(--color-teal-300);
+                --color-warning: var(--color-orange-400);
+                --color-info: var(--color-gray-300);
+                --color-btn-primary-text: var(--color-slate-900);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--color-text);
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--space-20);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-card h1 {
+            font-size: var(--font-size-3xl);
+            margin-bottom: 2rem;
+            color: #4a5568;
+            font-weight: var(--font-weight-bold);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: var(--font-weight-medium);
+            color: #4a5568;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: var(--space-12);
+            border: 2px solid #e2e8f0;
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            transition: all var(--duration-normal) var(--ease-standard);
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(var(--color-teal-500-rgb), 0.1);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #718096;
+            font-size: 18px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: var(--space-12) var(--space-24);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+            color: white;
+            border: none;
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(var(--color-teal-500-rgb), 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Profile Selection Styles */
+        .profile-selection {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .profile-selection h2 {
+            font-size: var(--font-size-3xl);
+            margin-bottom: 2rem;
+            color: #4a5568;
+        }
+
+        .profile-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: 2px solid transparent;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primary);
+            box-shadow: 0 15px 35px rgba(var(--color-teal-500-rgb), 0.2);
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .profile-card h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+
+        .profile-card p {
+            color: #718096;
+            font-size: var(--font-size-sm);
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            background: var(--color-background);
+            min-height: 100vh;
+            padding: var(--space-20);
+        }
+
+        .dashboard-header {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-info h1 {
+            font-size: var(--font-size-2xl);
+            color: var(--color-text);
+            margin-bottom: var(--space-8);
+        }
+
+        .live-time {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--space-16);
+        }
+
+        .profile-info {
+            text-align: right;
+        }
+
+        .profile-name {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+        }
+
+        .profile-role {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .logout-btn {
+            background: var(--color-error);
+            color: white;
+            border: none;
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .logout-btn:hover {
+            background: color-mix(in srgb, var(--color-error) 90%, black 10%);
+        }
+
+        .switch-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            transition: all var(--duration-fast) var(--ease-standard);
+            margin-right: var(--space-8);
+        }
+
+        .switch-btn:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* Chat Interface Styles */
+        .chat-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(var(--color-teal-500-rgb), 0.4);
+            transition: all var(--duration-normal) var(--ease-standard);
+            position: relative;
+        }
+
+        .chat-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(var(--color-teal-500-rgb), 0.6);
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--color-error);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-bold);
+            border: 2px solid white;
+        }
+
+        .chat-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 380px;
+            height: 500px;
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 998;
+            overflow: hidden;
+        }
+
+        .chat-container.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            color: white;
+            padding: var(--space-16);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: var(--font-size-lg);
+            margin: 0;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background var(--duration-fast);
+        }
+
+        .chat-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-16);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+            background: var(--color-background);
+        }
+
+        .chat-message {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message.own {
+            align-self: flex-end;
+        }
+
+        .chat-message.other {
+            align-self: flex-start;
+        }
+
+        .chat-message-header {
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-4);
+            color: var(--color-text-secondary);
+        }
+
+        .chat-message.own .chat-message-header {
+            text-align: right;
+        }
+
+        .chat-bubble {
+            padding: var(--space-12);
+            border-radius: var(--radius-md);
+            word-wrap: break-word;
+            position: relative;
+        }
+
+        .chat-message.own .chat-bubble {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.other .chat-bubble {
+            background: var(--color-secondary);
+            color: var(--color-text);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-time {
+            font-size: var(--font-size-xs);
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: var(--space-4);
+        }
+
+        .chat-message.other .chat-time {
+            color: var(--color-text-secondary);
+        }
+
+        .chat-input-container {
+            padding: var(--space-16);
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: var(--space-12);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-sm);
+            background: var(--color-background);
+            color: var(--color-text);
+            resize: none;
+            font-family: var(--font-family-base);
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(var(--color-teal-500-rgb), 0.1);
+        }
+
+        .chat-send {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-base);
+            padding: var(--space-12) var(--space-16);
+            cursor: pointer;
+            font-size: 20px;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .chat-send:hover {
+            background: var(--color-primary-hover);
+            transform: scale(1.05);
+        }
+
+        .chat-send:active {
+            transform: scale(0.95);
+        }
+
+        .chat-image-preview {
+            position: relative;
+            display: inline-block;
+            margin-top: var(--space-8);
+        }
+
+        .chat-image-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: var(--radius-base);
+            border: 2px solid var(--color-border);
+        }
+
+        .remove-image {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: var(--color-error);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-message-image {
+            margin-top: var(--space-8);
+        }
+
+        .chat-message-image img {
+            max-width: 100%;
+            border-radius: var(--radius-base);
+            cursor: pointer;
+        }
+
+        .image-upload-btn {
+            background: var(--color-secondary);
+            color: var(--color-text);
+            border: none;
+            border-radius: var(--radius-base);
+            padding: var(--space-12) var(--space-16);
+            cursor: pointer;
+            font-size: 20px;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .image-upload-btn:hover {
+            background: var(--color-secondary-hover);
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-8);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 150px;
+            padding: var(--space-12) var(--space-20);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-secondary);
+            transition: all var(--duration-fast) var(--ease-standard);
+            text-align: center;
+        }
+
+        .tab.active {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .tab:hover:not(.active) {
+            background: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Schedule Form */
+        .schedule-form {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .schedule-form h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-20);
+            color: var(--color-text);
+        }
+
+        .time-slot-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr 2fr auto;
+            gap: var(--space-16);
+            margin-bottom: var(--space-16);
+            padding: var(--space-16);
+            background: rgba(var(--color-teal-500-rgb), 0.05);
+            border-radius: var(--radius-base);
+            border: 1px solid rgba(var(--color-teal-500-rgb), 0.1);
+        }
+
+        .time-slot-form input,
+        .time-slot-form select {
+            padding: var(--space-8);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-sm);
+            background: var(--color-surface);
+            color: var(--color-text);
+        }
+
+        .remove-slot {
+            background: var(--color-error);
+            color: white;
+            border: none;
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            padding: var(--space-8);
+            font-size: var(--font-size-sm);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--space-12);
+            margin-top: var(--space-20);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        /* Tasks Display */
+        .tasks-container {
+            display: grid;
+            gap: var(--space-16);
+        }
+
+        .task-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-20);
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--color-primary);
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .task-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .task-card.completed {
+            border-left-color: var(--color-success);
+            opacity: 0.8;
+        }
+
+        .task-card.completed .task-topic {
+            text-decoration: line-through;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-12);
+        }
+
+        .task-time {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary);
+        }
+
+        .task-priority {
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .priority-high {
+            background: rgba(var(--color-red-500-rgb), 0.1);
+            color: var(--color-error);
+        }
+
+        .priority-medium {
+            background: rgba(var(--color-orange-500-rgb), 0.1);
+            color: var(--color-warning);
+        }
+
+        .priority-low {
+            background: rgba(var(--color-teal-500-rgb), 0.1);
+            color: var(--color-success);
+        }
+
+        .task-topic {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin-bottom: var(--space-8);
+        }
+
+        .task-notes {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-16);
+        }
+
+        .task-actions {
+            display: flex;
+            gap: var(--space-8);
+            flex-wrap: wrap;
+        }
+
+        .task-actions button {
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-sm);
+            border: none;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+            font-weight: var(--font-weight-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .task-actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .complete-btn {
+            background: linear-gradient(135deg, var(--color-success), var(--color-teal-600));
+            color: white;
+        }
+
+        .complete-btn:hover {
+            background: linear-gradient(135deg, var(--color-teal-600), var(--color-teal-700));
+        }
+
+        .edit-btn {
+            background: linear-gradient(135deg, var(--color-warning), #d97706);
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+        }
+
+        .delete-btn {
+            background: linear-gradient(135deg, var(--color-error), #b91c1c);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
+        }
+
+        .task-edited {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            font-style: italic;
+            margin-top: var(--space-8);
+            padding: var(--space-4) var(--space-8);
+            background: rgba(var(--color-teal-500-rgb), 0.05);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            margin-bottom: var(--space-24);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-secondary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: var(--space-8);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-hover));
+            transition: width var(--duration-normal) var(--ease-standard);
+        }
+
+        .progress-text {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            text-align: center;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-16);
+            margin-bottom: var(--space-24);
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            padding: var(--space-20);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin-bottom: var(--space-8);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        /* Filters */
+        .filters {
+            margin-bottom: var(--space-20);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .filter-btn {
+            padding: var(--space-8) var(--space-16);
+            background: var(--color-secondary);
+            border: none;
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-20);
+        }
+
+        .modal-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--color-text-secondary);
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--color-success);
+            color: white;
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            box-shadow: var(--shadow-lg);
+            z-index: 1001;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: var(--color-error);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: var(--space-12);
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: var(--space-16);
+                text-align: center;
+            }
+
+            .time-slot-form {
+                grid-template-columns: 1fr;
+                gap: var(--space-12);
+            }
+
+            .task-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-8);
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                min-width: unset;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <h1>🎯 Study Planner</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" required placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-control" required placeholder="Enter password">
+                        <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Selection Page -->
+    <div id="profilePage" class="login-container hidden">
+        <div class="login-card" style="max-width: 600px;">
+            <div class="profile-selection">
+                <h2>Choose Your Profile</h2>
+                <div class="profile-cards">
+                    <div class="profile-card" onclick="selectProfile('profile1', 'Doraemon')">
+                        <div class="profile-avatar">🤖</div>
+                        <h3>Doraemon</h3>
+                        <p>Future Technology Expert</p>
+                    </div>
+                    <div class="profile-card" onclick="selectProfile('profile2', 'Nobithaaa')">
+                        <div class="profile-avatar">👨‍🎓</div>
+                        <h3>Nobithaaa</h3>
+                        <p>Determined Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="header-info">
+                <h1 id="welcomeMessage">Welcome back!</h1>
+                <div class="live-time" id="liveTime"></div>
+            </div>
+            <div class="user-profile">
+                <div class="profile-info">
+                    <div class="profile-name" id="profileName">User</div>
+                    <div class="profile-role">Study Profile</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: var(--space-12);">
+                    <div class="chat-icon" onclick="toggleChat()">
+                        💬
+                        <span class="chat-badge hidden" id="chatBadge">0</span>
+                    </div>
+                    <button class="switch-btn" onclick="switchAccount()">🔄 Switch Account</button>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% completed today</div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="todayCompleted">0</div>
+                <div class="stat-label">Today Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todayPending">0</div>
+                <div class="stat-label">Today Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="weekPending">0</div>
+                <div class="stat-label">Week Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalProblems">0</div>
+                <div class="stat-label">Total Problems Solved</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('schedule')">📅 Schedule</button>
+            <button class="tab" onclick="switchTab('log')">📝 Log Session</button>
+            <button class="tab" onclick="switchTab('today')">📋 Today's Tasks</button>
+            <button class="tab" onclick="switchTab('weekly')">📊 Weekly Pending</button>
+            <button class="tab" onclick="switchTab('analytics')">📈 Analytics</button>
+        </div>
+
+        <!-- Schedule Tab -->
+        <div id="scheduleTab" class="tab-content active">
+            <div class="schedule-form">
+                <h3>Create Study Schedule</h3>
+                <div id="timeSlots">
+                    <div class="time-slot-form">
+                        <input type="time" class="start-time" required>
+                        <input type="time" class="end-time" required>
+                        <input type="text" class="topic" placeholder="Study Topic" required>
+                        <select class="priority">
+                            <option value="low">Low Priority</option>
+                            <option value="medium">Medium Priority</option>
+                            <option value="high">High Priority</option>
+                        </select>
+                        <input type="text" class="notes" placeholder="Study targets/notes">
+                        <button type="button" class="remove-slot" onclick="removeTimeSlot(this)">×</button>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="addTimeSlot()">+ Add Time Slot</button>
+                    <button type="button" class="btn btn-primary" onclick="saveSchedule()">💾 Save Schedule</button>
+                    <button type="button" class="btn btn-secondary" onclick="clearForm()">🗑️ Clear Form</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Log Session Tab -->
+        <div id="logTab" class="tab-content">
+            <div class="schedule-form">
+                <h3>Log Your Study Session</h3>
+                <div class="filters">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterTasks('all')">All Tasks</button>
+                        <button class="filter-btn" onclick="filterTasks('pending')">Pending</button>
+                        <button class="filter-btn" onclick="filterTasks('completed')">Completed</button>
+                    </div>
+                </div>
+                <div id="logTasks" class="tasks-container"></div>
+            </div>
+        </div>
+
+        <!-- Today's Tasks Tab -->
+        <div id="todayTab" class="tab-content">
+            <div class="schedule-form">
+                <h3>Today's Schedule</h3>
+                <div class="filters">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterTodayTasks('all')">All</button>
+                        <button class="filter-btn" onclick="filterTodayTasks('pending')">Pending</button>
+                        <button class="filter-btn" onclick="filterTodayTasks('completed')">Completed</button>
+                    </div>
+                </div>
+                <div id="todayTasks" class="tasks-container"></div>
+            </div>
+        </div>
+
+        <!-- Weekly Pending Tab -->
+        <div id="weeklyTab" class="tab-content">
+            <div class="schedule-form">
+                <h3>Weekly Pending Tasks</h3>
+                <div id="weeklyTasks" class="tasks-container"></div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content">
+            <div class="schedule-form">
+                <h3>Study Analytics</h3>
+                <div id="analyticsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Modal -->
+    <div id="completionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Mark as Completed</h3>
+                <button class="close-modal" onclick="closeCompletionModal()">&times;</button>
+            </div>
+            <form id="completionForm">
+                <div class="form-group">
+                    <label for="timeSpent">Time Spent (minutes)</label>
+                    <input type="number" id="timeSpent" class="form-control" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="problemsSolved">Problems Solved</label>
+                    <input type="number" id="problemsSolved" class="form-control" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="completionNotes">Notes (optional)</label>
+                    <textarea id="completionNotes" class="form-control" rows="3" placeholder="Any additional notes..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCompletionModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Complete Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Chat Interface -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>💭 Chat</h3>
+            <button class="chat-close" onclick="toggleChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-container">
+            <div style="width: 100%;">
+                <div id="imagePreviewContainer"></div>
+                <textarea class="chat-input" id="chatInput" placeholder="Type a message..." rows="1"></textarea>
+            </div>
+            <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageSelect(event)">
+            <button class="image-upload-btn" onclick="document.getElementById('imageInput').click()">📷</button>
+            <button class="chat-send" onclick="sendMessage()">📤</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let currentProfile = null;
+        let schedules = [];
+        let currentTaskId = null;
+        let chatMessages = [];
+        let unreadCount = 0;
+        let selectedImage = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLiveTime();
+            setInterval(updateLiveTime, 1000);
+            
+            // Check if user is already logged in
+            const savedUser = sessionStorage.getItem('currentUser');
+            const savedProfile = sessionStorage.getItem('currentProfile');
+            
+            if (savedUser && savedProfile) {
+                currentUser = savedUser;
+                currentProfile = savedProfile;
+                showDashboard();
+            }
+            
+            // Refresh chat messages periodically
+            setInterval(function() {
+                if (document.getElementById('dashboard').classList.contains('hidden') === false) {
+                    loadChatMessages();
+                }
+            }, 2000);
+        });
+
+        // Live Time Update
+        function updateLiveTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            document.getElementById('liveTime').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        // Password toggle
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggle = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggle.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggle.textContent = '👁️';
+            }
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'admin' && password === 'Master@1234') {
+                currentUser = username;
+                sessionStorage.setItem('currentUser', username);
+                showProfileSelection();
+            } else {
+                showToast('Invalid credentials! Please try again.', 'error');
+            }
+        });
+
+        // Show profile selection
+        function showProfileSelection() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('profilePage').classList.remove('hidden');
+        }
+
+        // Select profile
+        function selectProfile(profileId, profileName) {
+            currentProfile = profileId;
+            sessionStorage.setItem('currentProfile', profileId);
+            sessionStorage.setItem('profileName', profileName);
+            showToast(`Welcome ${profileName}! Loading your dashboard...`, 'success');
+            setTimeout(showDashboard, 1000);
+        }
+
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('profilePage').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            
+            const profileName = sessionStorage.getItem('profileName') || 'User';
+            document.getElementById('profileName').textContent = profileName;
+            document.getElementById('welcomeMessage').textContent = `Welcome back, ${profileName}!`;
+            
+            loadSchedules();
+            loadChatMessages();
+            updateStatistics();
+            displayTodayTasks();
+        }
+
+        // Switch account
+        function switchAccount() {
+            if (confirm('Do you want to switch to another profile?')) {
+                document.getElementById('dashboard').classList.add('hidden');
+                document.getElementById('profilePage').classList.remove('hidden');
+            }
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.clear();
+                currentUser = null;
+                currentProfile = null;
+                schedules = [];
+                
+                document.getElementById('dashboard').classList.add('hidden');
+                document.getElementById('loginPage').classList.remove('hidden');
+                
+                // Reset form
+                document.getElementById('loginForm').reset();
+                
+                showToast('Logged out successfully!', 'success');
+            }
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Load specific content
+            if (tabName === 'log') {
+                displayLogTasks();
+            } else if (tabName === 'today') {
+                displayTodayTasks();
+            } else if (tabName === 'weekly') {
+                displayWeeklyTasks();
+            } else if (tabName === 'analytics') {
+                displayAnalytics();
+            }
+        }
+
+        // Add time slot
+        function addTimeSlot() {
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            const newSlot = document.createElement('div');
+            newSlot.className = 'time-slot-form';
+            newSlot.innerHTML = `
+                <input type="time" class="start-time" required>
+                <input type="time" class="end-time" required>
+                <input type="text" class="topic" placeholder="Study Topic" required>
+                <select class="priority">
+                    <option value="low">Low Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+                <input type="text" class="notes" placeholder="Study targets/notes">
+                <button type="button" class="remove-slot" onclick="removeTimeSlot(this)">×</button>
+            `;
+            timeSlotsContainer.appendChild(newSlot);
+        }
+
+        // Remove time slot
+        function removeTimeSlot(button) {
+            button.closest('.time-slot-form').remove();
+        }
+
+        // Clear form
+        function clearForm() {
+            const timeSlotsContainer = document.getElementById('timeSlots');
+            timeSlotsContainer.innerHTML = `
+                <div class="time-slot-form">
+                    <input type="time" class="start-time" required>
+                    <input type="time" class="end-time" required>
+                    <input type="text" class="topic" placeholder="Study Topic" required>
+                    <select class="priority">
+                        <option value="low">Low Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                    <input type="text" class="notes" placeholder="Study targets/notes">
+                    <button type="button" class="remove-slot" onclick="removeTimeSlot(this)">×</button>
+                </div>
+            `;
+        }
+
+        // Save schedule
+        function saveSchedule() {
+            const timeSlotForms = document.querySelectorAll('.time-slot-form');
+            
+            if (timeSlotForms.length === 0) {
+                showToast('Please add at least one time slot!', 'error');
+                return;
+            }
+            
+            const newSchedules = [];
+            const today = new Date().toISOString().split('T')[0];
+            
+            timeSlotForms.forEach(form => {
+                const startTime = form.querySelector('.start-time').value;
+                const endTime = form.querySelector('.end-time').value;
+                const topic = form.querySelector('.topic').value;
+                const priority = form.querySelector('.priority').value;
+                const notes = form.querySelector('.notes').value;
+                
+                if (startTime && endTime && topic) {
+                    newSchedules.push({
+                        id: Date.now() + Math.random(),
+                        date: today,
+                        startTime,
+                        endTime,
+                        topic,
+                        priority,
+                        notes,
+                        completed: false,
+                        timeSpent: 0,
+                        problemsSolved: 0,
+                        completionNotes: ''
+                    });
+                }
+            });
+            
+            if (newSchedules.length === 0) {
+                showToast('Please fill in all required fields!', 'error');
+                return;
+            }
+            
+            schedules.push(...newSchedules);
+            saveSchedules();
+            clearForm();
+            updateStatistics();
+            displayTodayTasks();
+            showToast(`${newSchedules.length} tasks scheduled successfully!`, 'success');
+        }
+
+        // Load schedules
+        function loadSchedules() {
+            const key = `studySchedules_${currentProfile}`;
+            const saved = sessionStorage.getItem(key);
+            schedules = saved ? JSON.parse(saved) : [];
+        }
+
+        // Save schedules
+        function saveSchedules() {
+            const key = `studySchedules_${currentProfile}`;
+            sessionStorage.setItem(key, JSON.stringify(schedules));
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayTasks = schedules.filter(task => task.date === today);
+            const completedToday = todayTasks.filter(task => task.completed).length;
+            const pendingToday = todayTasks.length - completedToday;
+            
+            // Week pending (last 7 days)
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            const weekPending = schedules.filter(task => {
+                const taskDate = new Date(task.date);
+                return !task.completed && taskDate >= weekAgo;
+            }).length;
+            
+            const totalProblems = schedules.reduce((sum, task) => sum + (task.problemsSolved || 0), 0);
+            
+            // Update UI
+            document.getElementById('todayCompleted').textContent = completedToday;
+            document.getElementById('todayPending').textContent = pendingToday;
+            document.getElementById('weekPending').textContent = weekPending;
+            document.getElementById('totalProblems').textContent = totalProblems;
+            
+            // Update progress bar
+            const progress = todayTasks.length > 0 ? (completedToday / todayTasks.length) * 100 : 0;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${Math.round(progress)}% completed today`;
+        }
+
+        // Display tasks for logging
+        function displayLogTasks() {
+            const container = document.getElementById('logTasks');
+            const today = new Date().toISOString().split('T')[0];
+            const todayTasks = schedules.filter(task => task.date === today);
+            
+            if (todayTasks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--color-text-secondary); padding: 2rem;">No tasks scheduled for today. Create a schedule first!</p>';
+                return;
+            }
+            
+            container.innerHTML = todayTasks.map(task => createTaskCard(task)).join('');
+        }
+
+        // Display today's tasks
+        function displayTodayTasks() {
+            const container = document.getElementById('todayTasks');
+            const today = new Date().toISOString().split('T')[0];
+            const todayTasks = schedules.filter(task => task.date === today);
+            
+            if (todayTasks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--color-text-secondary); padding: 2rem;">No tasks scheduled for today. Create a schedule first!</p>';
+                return;
+            }
+            
+            container.innerHTML = todayTasks.map(task => createTaskCard(task, true)).join('');
+        }
+
+        // Display weekly pending tasks
+        function displayWeeklyTasks() {
+            const container = document.getElementById('weeklyTasks');
+            const weekAgo = new Date();
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            
+            const pendingTasks = schedules.filter(task => {
+                const taskDate = new Date(task.date);
+                return !task.completed && taskDate >= weekAgo;
+            });
+            
+            if (pendingTasks.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--color-text-secondary); padding: 2rem;">🎉 No pending tasks this week!</p>';
+                return;
+            }
+            
+            container.innerHTML = pendingTasks.map(task => createTaskCard(task, true)).join('');
+        }
+
+        // Display analytics
+        function displayAnalytics() {
+            const container = document.getElementById('analyticsContent');
+            
+            // Group tasks by subject
+            const subjectStats = {};
+            schedules.forEach(task => {
+                if (!subjectStats[task.topic]) {
+                    subjectStats[task.topic] = {
+                        total: 0,
+                        completed: 0,
+                        timeSpent: 0,
+                        problems: 0
+                    };
+                }
+                subjectStats[task.topic].total++;
+                if (task.completed) {
+                    subjectStats[task.topic].completed++;
+                    subjectStats[task.topic].timeSpent += task.timeSpent || 0;
+                    subjectStats[task.topic].problems += task.problemsSolved || 0;
+                }
+            });
+            
+            let analyticsHTML = '<div class="stats-grid">';
+            Object.keys(subjectStats).forEach(subject => {
+                const stats = subjectStats[subject];
+                const completionRate = stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
+                
+                analyticsHTML += `
+                    <div class="stat-card">
+                        <h4 style="margin-bottom: 1rem; color: var(--color-text);">${subject}</h4>
+                        <div style="display: grid; gap: 0.5rem; text-align: left;">
+                            <div><strong>Completion:</strong> ${completionRate}%</div>
+                            <div><strong>Time Spent:</strong> ${stats.timeSpent} min</div>
+                            <div><strong>Problems:</strong> ${stats.problems}</div>
+                            <div><strong>Tasks:</strong> ${stats.completed}/${stats.total}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            analyticsHTML += '</div>';
+            
+            container.innerHTML = analyticsHTML || '<p style="text-align: center; color: var(--color-text-secondary); padding: 2rem;">No data available yet. Start completing tasks!</p>';
+        }
+
+        // Create task card HTML
+        function createTaskCard(task, showEdit = false) {
+            return `
+                <div class="task-card ${task.completed ? 'completed' : ''}">
+                    <div class="task-header">
+                        <span class="task-time">${task.startTime} - ${task.endTime}</span>
+                        <span class="task-priority priority-${task.priority}">${task.priority.toUpperCase()}</span>
+                    </div>
+                    <div class="task-topic">${task.topic}</div>
+                    ${task.notes ? `<div class="task-notes">${task.notes}</div>` : ''}
+                    ${task.completed ? `
+                        <div class="task-notes" style="color: var(--color-success); font-weight: 500;">
+                            ✅ Completed • ${task.timeSpent || 0} min • ${task.problemsSolved || 0} problems solved
+                            ${task.completionNotes ? `<br><em>"${task.completionNotes}"</em>` : ''}
+                        </div>
+                    ` : ''}
+                    ${task.editedBy ? `<div class="task-edited">✏️ Edited by ${task.editedBy}</div>` : ''}
+                    <div class="task-actions">
+                        ${!task.completed ? `<button class="complete-btn" onclick="openCompletionModal('${task.id}')">✅ Complete</button>` : ''}
+                        ${showEdit ? `
+                            <button class="edit-btn" onclick="editTask('${task.id}')">✏️ Edit</button>
+                            <button class="delete-btn" onclick="deleteTask('${task.id}')">🗑️ Delete</button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Open completion modal
+        function openCompletionModal(taskId) {
+            currentTaskId = taskId;
+            document.getElementById('completionModal').classList.add('active');
+            document.getElementById('timeSpent').focus();
+        }
+
+        // Close completion modal
+        function closeCompletionModal() {
+            document.getElementById('completionModal').classList.remove('active');
+            document.getElementById('completionForm').reset();
+            currentTaskId = null;
+        }
+
+        // Handle completion form
+        document.getElementById('completionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const timeSpent = parseInt(document.getElementById('timeSpent').value);
+            const problemsSolved = parseInt(document.getElementById('problemsSolved').value);
+            const completionNotes = document.getElementById('completionNotes').value;
+            
+            const task = schedules.find(t => t.id == currentTaskId);
+            if (task) {
+                task.completed = true;
+                task.timeSpent = timeSpent;
+                task.problemsSolved = problemsSolved;
+                task.completionNotes = completionNotes;
+                
+                saveSchedules();
+                updateStatistics();
+                displayLogTasks();
+                displayTodayTasks();
+                closeCompletionModal();
+                
+                showToast(`Task completed! ${timeSpent} minutes, ${problemsSolved} problems solved.`, 'success');
+            }
+        });
+
+        // Filter tasks
+        function filterTasks(filter) {
+            document.querySelectorAll('#logTab .filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const tasks = document.querySelectorAll('#logTasks .task-card');
+            tasks.forEach(task => {
+                const isCompleted = task.classList.contains('completed');
+                let show = false;
+                
+                if (filter === 'all') show = true;
+                else if (filter === 'completed') show = isCompleted;
+                else if (filter === 'pending') show = !isCompleted;
+                
+                task.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        // Filter today's tasks
+        function filterTodayTasks(filter) {
+            document.querySelectorAll('#todayTab .filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const tasks = document.querySelectorAll('#todayTasks .task-card');
+            tasks.forEach(task => {
+                const isCompleted = task.classList.contains('completed');
+                let show = false;
+                
+                if (filter === 'all') show = true;
+                else if (filter === 'completed') show = isCompleted;
+                else if (filter === 'pending') show = !isCompleted;
+                
+                task.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        // Edit task
+        function editTask(taskId) {
+            const task = schedules.find(t => t.id == taskId);
+            if (task) {
+                const newTopic = prompt('Edit topic:', task.topic);
+                if (newTopic && newTopic.trim()) {
+                    task.topic = newTopic.trim();
+                    task.editedBy = sessionStorage.getItem('profileName');
+                    saveSchedules();
+                    displayTodayTasks();
+                    displayLogTasks();
+                    showToast('Task updated successfully!', 'success');
+                }
+            }
+        }
+
+        // Delete task
+        function deleteTask(taskId) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                schedules = schedules.filter(t => t.id != taskId);
+                saveSchedules();
+                updateStatistics();
+                displayTodayTasks();
+                displayLogTasks();
+                showToast('Task deleted successfully!', 'success');
+            }
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Chat functions
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.classList.toggle('active');
+            
+            if (chatContainer.classList.contains('active')) {
+                unreadCount = 0;
+                updateChatBadge();
+                document.getElementById('chatInput').focus();
+            }
+        }
+
+        function loadChatMessages() {
+            const saved = sessionStorage.getItem('chatMessages_global');
+            chatMessages = saved ? JSON.parse(saved) : [];
+            displayChatMessages();
+            updateUnreadCount();
+        }
+
+        function saveChatMessages() {
+            sessionStorage.setItem('chatMessages_global', JSON.stringify(chatMessages));
+        }
+
+        function displayChatMessages() {
+            const container = document.getElementById('chatMessages');
+            const currentProfileName = sessionStorage.getItem('profileName');
+            
+            if (chatMessages.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: var(--color-text-secondary); padding: 2rem;">No messages yet. Start chatting!</div>';
+                return;
+            }
+            
+            container.innerHTML = chatMessages.map(msg => {
+                const isOwn = msg.profile === currentProfileName;
+                const time = new Date(msg.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                
+                return `
+                    <div class="chat-message ${isOwn ? 'own' : 'other'}">
+                        <div class="chat-message-header">${msg.profile}</div>
+                        <div class="chat-bubble">
+                            ${msg.message ? msg.message : ''}
+                            ${msg.image ? `<div class="chat-message-image"><img src="${msg.image}" alt="Shared image" onclick="openImageFullScreen('${msg.image}')"></div>` : ''}
+                            <div class="chat-time">${time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message && !selectedImage) return;
+            
+            const newMessage = {
+                id: Date.now(),
+                profile: sessionStorage.getItem('profileName'),
+                message: message,
+                image: selectedImage,
+                timestamp: new Date().toISOString()
+            };
+            
+            chatMessages.push(newMessage);
+            saveChatMessages();
+            displayChatMessages();
+            input.value = '';
+            selectedImage = null;
+            document.getElementById('imagePreviewContainer').innerHTML = '';
+            
+            showToast('Message sent!', 'success');
+        }
+
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                showToast('Please select an image file!', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                selectedImage = e.target.result;
+                displayImagePreview(selectedImage);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function displayImagePreview(imageSrc) {
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = `
+                <div class="chat-image-preview">
+                    <img src="${imageSrc}" alt="Preview">
+                    <button class="remove-image" onclick="removeImagePreview()">×</button>
+                </div>
+            `;
+        }
+
+        function removeImagePreview() {
+            selectedImage = null;
+            document.getElementById('imagePreviewContainer').innerHTML = '';
+            document.getElementById('imageInput').value = '';
+        }
+
+        function openImageFullScreen(imageSrc) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            `;
+            
+            const img = document.createElement('img');
+            img.src = imageSrc;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 8px;
+            `;
+            
+            modal.appendChild(img);
+            modal.onclick = () => modal.remove();
+            document.body.appendChild(modal);
+        }
+
+        function updateUnreadCount() {
+            const currentProfileName = sessionStorage.getItem('profileName');
+            const otherProfileMessages = chatMessages.filter(msg => msg.profile !== currentProfileName);
+            
+            // Get last seen timestamp
+            const lastSeen = sessionStorage.getItem(`lastSeen_${currentProfile}`) || 0;
+            unreadCount = otherProfileMessages.filter(msg => new Date(msg.timestamp).getTime() > lastSeen).length;
+            
+            updateChatBadge();
+        }
+
+        function updateChatBadge() {
+            const badge = document.getElementById('chatBadge');
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+            
+            // Update last seen when chat is opened
+            if (document.getElementById('chatContainer').classList.contains('active')) {
+                sessionStorage.setItem(`lastSeen_${currentProfile}`, new Date().getTime());
+            }
+        }
+
+        // Handle Enter key in chat
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('completionModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCompletionModal();
+            }
+        });
+    </script>
+</body>
+</html>
