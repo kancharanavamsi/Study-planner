@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Government Exam Study Planner</title>
+    <title>Study Planner</title>
     <style>
         :root {
             /* Design System Colors */
@@ -635,6 +634,96 @@
             cursor: pointer;
         }
 
+        .chat-date-separator {
+            text-align: center;
+            padding: var(--space-16) 0;
+            margin: var(--space-8) 0;
+        }
+
+        .chat-date-separator span {
+            background: var(--color-secondary);
+            padding: var(--space-4) var(--space-12);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .chat-reply-preview {
+            background: rgba(var(--color-teal-500-rgb), 0.35);
+            border-left: 5px solid var(--color-primary);
+            padding: var(--space-16);
+            margin-bottom: var(--space-12);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            max-height: 80px;
+            overflow: hidden;
+            border: 2px solid rgba(var(--color-teal-500-rgb), 0.4);
+        }
+
+        .chat-reply-header {
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary);
+            margin-bottom: var(--space-8);
+            font-size: var(--font-size-base);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+        
+        .chat-message.own .chat-reply-preview {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .chat-message.own .chat-reply-header {
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .chat-message.own .chat-reply-preview div {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .chat-message-actions {
+            display: flex;
+            gap: var(--space-8);
+            margin-top: var(--space-4);
+            font-size: var(--font-size-xs);
+        }
+
+        .chat-action-btn {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            padding: var(--space-4);
+            font-size: var(--font-size-xs);
+            transition: color var(--duration-fast);
+        }
+
+        .chat-action-btn:hover {
+            color: var(--color-primary);
+        }
+
+        .reply-indicator {
+            background: var(--color-secondary);
+            padding: var(--space-8) var(--space-12);
+            margin-bottom: var(--space-8);
+            border-radius: var(--radius-base);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-sm);
+        }
+
+        .reply-indicator-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--color-text-secondary);
+        }
+
         .image-upload-btn {
             background: var(--color-secondary);
             color: var(--color-text);
@@ -1108,27 +1197,6 @@
     </style>
 </head>
 <body>
-    <!-- Login Page -->
-    <div id="loginPage" class="login-container">
-        <div class="login-card">
-            <h1>🎯 Study Planner</h1>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" required placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="password-container">
-                        <input type="password" id="password" class="form-control" required placeholder="Enter password">
-                        <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
-                    </div>
-                </div>
-                <button type="submit" class="btn">Login</button>
-            </form>
-        </div>
-    </div>
-
     <!-- Profile Selection Page -->
     <div id="profilePage" class="login-container hidden">
         <div class="login-card" style="max-width: 600px;">
@@ -1324,6 +1392,10 @@
         <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input-container">
             <div style="width: 100%;">
+                <div id="replyIndicator" class="reply-indicator hidden">
+                    <span id="replyText">Replying to...</span>
+                    <button class="reply-indicator-close" onclick="cancelReply()">×</button>
+                </div>
                 <div id="imagePreviewContainer"></div>
                 <textarea class="chat-input" id="chatInput" placeholder="Type a message..." rows="1"></textarea>
             </div>
@@ -1341,26 +1413,55 @@
         let chatMessages = [];
         let unreadCount = 0;
         let selectedImage = null;
+        let replyToMessage = null;
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
             updateLiveTime();
             setInterval(updateLiveTime, 1000);
             
-            // Check if user is already logged in
-            const savedUser = sessionStorage.getItem('currentUser');
-            const savedProfile = sessionStorage.getItem('currentProfile');
+            // Auto-login and show profile selection
+            currentUser = 'admin';
+            sessionStorage.setItem('currentUser', 'admin');
             
-            if (savedUser && savedProfile) {
-                currentUser = savedUser;
+            // Check if profile is already selected
+            const savedProfile = sessionStorage.getItem('currentProfile');
+            if (savedProfile) {
                 currentProfile = savedProfile;
                 showDashboard();
+            } else {
+                document.getElementById('profilePage').classList.remove('hidden');
             }
             
-            // Refresh chat messages periodically
+            // Refresh chat messages periodically with intelligent detection
+            let lastMessageCount = 0;
             setInterval(function() {
                 if (document.getElementById('dashboard').classList.contains('hidden') === false) {
-                    loadChatMessages();
+                    const chatContainer = document.getElementById('chatContainer');
+                    
+                    // Only check for new messages, don't refresh if nothing changed
+                    const saved = localStorage.getItem('chatMessages_global');
+                    const currentMessages = saved ? JSON.parse(saved) : [];
+                    
+                    // Only refresh if message count changed
+                    if (currentMessages.length !== lastMessageCount) {
+                        lastMessageCount = currentMessages.length;
+                        chatMessages = currentMessages;
+                        
+                        // Save scroll state
+                        const messagesContainer = document.getElementById('chatMessages');
+                        const scrollPos = messagesContainer.scrollTop;
+                        const scrollHeight = messagesContainer.scrollHeight;
+                        const isAtBottom = scrollHeight - scrollPos <= 600;
+                        
+                        displayChatMessages();
+                        updateUnreadCount();
+                        
+                        // Restore scroll if not at bottom
+                        if (!isAtBottom) {
+                            messagesContainer.scrollTop = scrollPos;
+                        }
+                    }
                 }
             }, 2000);
         });
@@ -1380,42 +1481,6 @@
             document.getElementById('liveTime').textContent = now.toLocaleDateString('en-US', options);
         }
 
-        // Password toggle
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggle = document.querySelector('.password-toggle');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggle.textContent = '🙈';
-            } else {
-                passwordInput.type = 'password';
-                toggle.textContent = '👁️';
-            }
-        }
-
-        // Login form handler
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            if (username === 'admin' && password === 'Master@1234') {
-                currentUser = username;
-                sessionStorage.setItem('currentUser', username);
-                showProfileSelection();
-            } else {
-                showToast('Invalid credentials! Please try again.', 'error');
-            }
-        });
-
-        // Show profile selection
-        function showProfileSelection() {
-            document.getElementById('loginPage').classList.add('hidden');
-            document.getElementById('profilePage').classList.remove('hidden');
-        }
-
         // Select profile
         function selectProfile(profileId, profileName) {
             currentProfile = profileId;
@@ -1427,7 +1492,6 @@
 
         // Show dashboard
         function showDashboard() {
-            document.getElementById('loginPage').classList.add('hidden');
             document.getElementById('profilePage').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
             
@@ -1444,6 +1508,9 @@
         // Switch account
         function switchAccount() {
             if (confirm('Do you want to switch to another profile?')) {
+                // Close chat window if open
+                document.getElementById('chatContainer').classList.remove('active');
+                
                 document.getElementById('dashboard').classList.add('hidden');
                 document.getElementById('profilePage').classList.remove('hidden');
             }
@@ -1452,16 +1519,16 @@
         // Logout
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
+                // Close chat window if open
+                document.getElementById('chatContainer').classList.remove('active');
+                
                 sessionStorage.clear();
                 currentUser = null;
                 currentProfile = null;
                 schedules = [];
                 
                 document.getElementById('dashboard').classList.add('hidden');
-                document.getElementById('loginPage').classList.remove('hidden');
-                
-                // Reset form
-                document.getElementById('loginForm').reset();
+                document.getElementById('profilePage').classList.remove('hidden');
                 
                 showToast('Logged out successfully!', 'success');
             }
@@ -1873,6 +1940,7 @@
         function loadChatMessages() {
             const saved = localStorage.getItem('chatMessages_global');
             chatMessages = saved ? JSON.parse(saved) : [];
+            lastMessageCount = chatMessages.length;
             displayChatMessages();
             updateUnreadCount();
         }
@@ -1890,23 +1958,73 @@
                 return;
             }
             
-            container.innerHTML = chatMessages.map(msg => {
+            // Save scroll position before updating
+            const scrollPos = container.scrollTop;
+            const scrollHeight = container.scrollHeight;
+            const isAtBottom = scrollHeight - scrollPos <= 600;
+            
+            let html = '';
+            let lastDate = null;
+            
+            chatMessages.forEach((msg, index) => {
                 const isOwn = msg.profile === currentProfileName;
-                const time = new Date(msg.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const msgDate = new Date(msg.timestamp);
+                const time = msgDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                const dateStr = msgDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
                 
-                return `
+                // Add date separator if date changed
+                if (lastDate !== dateStr) {
+                    const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    const yesterdayStr = yesterday.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                    
+                    let displayDate = dateStr;
+                    if (dateStr === today) displayDate = 'Today';
+                    else if (dateStr === yesterdayStr) displayDate = 'Yesterday';
+                    
+                    html += `<div class="chat-date-separator"><span>${displayDate}</span></div>`;
+                    lastDate = dateStr;
+                }
+                
+                // Build reply preview if exists
+                let replyPreview = '';
+                if (msg.replyTo) {
+                    const replyMsg = chatMessages.find(m => m.id === msg.replyTo);
+                    if (replyMsg) {
+                        replyPreview = `
+                            <div class="chat-reply-preview">
+                                <div class="chat-reply-header">↩️ ${replyMsg.profile}</div>
+                                <div>${replyMsg.message ? replyMsg.message.substring(0, 50) + (replyMsg.message.length > 50 ? '...' : '') : '📷 Image'}</div>
+                            </div>
+                        `;
+                    }
+                }
+                
+                html += `
                     <div class="chat-message ${isOwn ? 'own' : 'other'}">
                         <div class="chat-message-header">${msg.profile}</div>
                         <div class="chat-bubble">
+                            ${replyPreview}
                             ${msg.message ? msg.message : ''}
                             ${msg.image ? `<div class="chat-message-image"><img src="${msg.image}" alt="Shared image" onclick="openImageFullScreen('${msg.image}')"></div>` : ''}
                             <div class="chat-time">${time}</div>
+                            <div class="chat-message-actions">
+                                <button class="chat-action-btn" onclick="replyToMsg(${msg.id})">↩️ Reply</button>
+                            </div>
                         </div>
                     </div>
                 `;
-            }).join('');
+            });
             
-            container.scrollTop = container.scrollHeight;
+            container.innerHTML = html;
+            
+            // Restore scroll position or scroll to bottom if was at bottom
+            if (isAtBottom) {
+                container.scrollTop = container.scrollHeight;
+            } else {
+                container.scrollTop = scrollPos;
+            }
         }
 
         function sendMessage() {
@@ -1920,17 +2038,41 @@
                 profile: sessionStorage.getItem('profileName'),
                 message: message,
                 image: selectedImage,
+                replyTo: replyToMessage,
                 timestamp: new Date().toISOString()
             };
             
             chatMessages.push(newMessage);
+            lastMessageCount = chatMessages.length;
             saveChatMessages();
             displayChatMessages();
             input.value = '';
             selectedImage = null;
+            replyToMessage = null;
             document.getElementById('imagePreviewContainer').innerHTML = '';
+            document.getElementById('replyIndicator').classList.add('hidden');
             
             showToast('Message sent!', 'success');
+        }
+
+        function replyToMsg(msgId) {
+            const msg = chatMessages.find(m => m.id === msgId);
+            if (!msg) return;
+            
+            replyToMessage = msgId;
+            const replyIndicator = document.getElementById('replyIndicator');
+            const replyText = document.getElementById('replyText');
+            
+            const preview = msg.message ? msg.message.substring(0, 30) + (msg.message.length > 30 ? '...' : '') : '📷 Image';
+            replyText.textContent = `Replying to ${msg.profile}: ${preview}`;
+            replyIndicator.classList.remove('hidden');
+            
+            document.getElementById('chatInput').focus();
+        }
+
+        function cancelReply() {
+            replyToMessage = null;
+            document.getElementById('replyIndicator').classList.add('hidden');
         }
 
         function handleImageSelect(event) {
